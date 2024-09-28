@@ -26,6 +26,10 @@ def new(bibtex_key,prompt_for_filename,file_name ,
     '''
     start a new file, use key if provided or prompt
     '''
+    if os.path.exists('litrev_config.yml'):
+        with open('.litrev_config','r') as f:
+            config_raw = r.read()
+        config = yaml.load(config_raw)
 
     if not(bibtex_key):
         bibtex_key = click.prompt('what is the bibtex key of the paper you will summarize',type=str)
