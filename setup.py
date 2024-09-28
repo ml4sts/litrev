@@ -7,9 +7,9 @@ setup(
     name='litreview-helper',
     version='0.1.1',
      include_package_data=True,
-    packages=['litrev' ],
+    packages=['litrev'               ],
     install_requires=[
-        'Click', 'bibtexparse>2.0'
+        'Click', 'bibtexparser>=2.0.0b7'
     ],
     # package_data = {'':['assests/paper.md']},
     entry_points={
