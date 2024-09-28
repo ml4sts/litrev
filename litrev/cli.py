@@ -1,6 +1,8 @@
+from warnings import warn
 import click
 import os
 import bibtexparser
+import yaml
 from .utils import load_template_file
 
 
@@ -44,7 +46,6 @@ def new(bibtex_key,prompt_for_filename,file_name ,
         template_name += '.md'
         template = load_template_file(template_name)
 
-    
 
     # picks first if multiple
     bibtex_file = [file for file in os.listdir() if '.bib' in file][0]
@@ -55,9 +56,14 @@ def new(bibtex_key,prompt_for_filename,file_name ,
 
     library =  bibtexparser.parse_string(bibtex_str)
     # keep first match
-    target_entry = [entry for entry in library.entries if entry.key == bibtex_key][0]
-
-    target_info = {key:feild.value for  key,feild in target_entry.fields_dict.items()}
+    candidate_entry = [entry for entry in library.entries if bibtex_key in entry.key]
+    if candidate_entry:
+        target_entry = candidate_entry[0]
+        target_info = {key:feild.value for  key,feild in target_entry.fields_dict.items()}
+    else:
+        warn('entry not found, using key for info')
+        
+        target_info = {'title':bibtex_key, 'author' :bibtex_key}
 
 
     filled_template = template.format(bibtex_key= bibtex_key,**target_info)
