@@ -9,7 +9,7 @@ setup(
      include_package_data=True,
     packages=['litrev' ],
     install_requires=[
-        'Click', 'bibtexparser'
+        'Click', 'bibtexparse>2.0'
     ],
     # package_data = {'':['assests/paper.md']},
     entry_points={
